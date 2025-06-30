@@ -4,7 +4,8 @@ import NotificationPopup from "../Components/NotificationPopup";
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const [user, setUser] = useState("sagar");
+  
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('authUser')));
   const [message, setMessage] = useState(null);
 
   const notify = (type, text) => {
