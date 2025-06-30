@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useApp } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 const users = [
   { id: "1", role: "Admin", email: "admin@entnt.in", password: "admin123" },
@@ -11,6 +12,7 @@ export default function Auth() {
   const [currentUser, setCurrentUser] = useState(null);
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const {notify} = useApp();
+    const navigate = useNavigate();
   useEffect(() => {
     const storedUser = localStorage.getItem("authUser");
     if (storedUser) {
@@ -27,6 +29,11 @@ export default function Auth() {
       setCurrentUser(user);
         notify("success", `Welcome ${user.email}`);
       reset();
+      if(user.role === "Admin")
+        navigate('/admin/dashboard');
+      else
+        navigate('/admin/dashboard');
+      
     } else {
     //   alert("Invalid credentials");
       notify("fail", `Invalid credentials`);
