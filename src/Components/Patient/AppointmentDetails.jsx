@@ -1,5 +1,4 @@
-// src/components/AppointmentDetails.jsx
-import React from "react";
+
 import { useParams, Link } from "react-router-dom";
 import { mockData } from "../../data/seedUsers";
 

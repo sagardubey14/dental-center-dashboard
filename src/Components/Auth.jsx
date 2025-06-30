@@ -2,17 +2,20 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useApp } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
+import { mockData } from "../data/seedUsers";
 
-const users = [
-  { id: "1", role: "Admin", email: "admin@entnt.in", password: "admin123" },
-  { id: "2", role: "Patient", email: "john@entnt.in", password: "patient123", patientId: "p1" }
-];
+const users = mockData.users;
 
 export default function Auth() {
   const [currentUser, setCurrentUser] = useState(null);
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const {notify} = useApp();
-    const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const { notify, user, setUser } = useApp();
+  const navigate = useNavigate();
   useEffect(() => {
     const storedUser = localStorage.getItem("authUser");
     if (storedUser) {
@@ -22,27 +25,26 @@ export default function Auth() {
 
   const onSubmit = (data) => {
     const user = users.find(
-      u => u.email === data.email && u.password === data.password
+      (u) => u.email === data.email && u.password === data.password
     );
     if (user) {
       localStorage.setItem("authUser", JSON.stringify(user));
       setCurrentUser(user);
-        notify("success", `Welcome ${user.email}`);
+      notify("success", `Welcome ${user.email}`);
       reset();
+      setUser(user);
       console.log(user);
-      
-      if(user.role === "Admin")
-        navigate('/admin/dashboard');
-      else
-        navigate('/patient/dashboard');
-      
     } else {
-    //   alert("Invalid credentials");
       notify("fail", `Invalid credentials`);
-
     }
-
   };
+
+  useEffect(() => {
+    if (user) {
+      if (user.role === "Admin") navigate("/admin/dashboard");
+      else navigate("/patient/dashboard");
+    }
+  }, [user, navigate]);
 
   const logout = () => {
     localStorage.removeItem("authUser");
@@ -58,9 +60,13 @@ export default function Auth() {
           </h2>
           <p className="mb-4">Logged in as: {currentUser.email}</p>
           {currentUser.role === "Admin" ? (
-            <p className="text-blue-600">You have access to the Admin (Dentist) Dashboard</p>
+            <p className="text-blue-600">
+              You have access to the Admin (Dentist) Dashboard
+            </p>
           ) : (
-            <p className="text-green-600">You have access to the Patient Portal</p>
+            <p className="text-green-600">
+              You have access to the Patient Portal
+            </p>
           )}
           <button
             onClick={logout}
@@ -85,7 +91,9 @@ export default function Auth() {
               {...register("email", { required: true })}
               className="w-full border px-3 py-2 rounded"
             />
-            {errors.email && <p className="text-red-500 text-sm">Email is required</p>}
+            {errors.email && (
+              <p className="text-red-500 text-sm">Email is required</p>
+            )}
           </div>
           <div>
             <label className="block mb-1">Password</label>
@@ -94,7 +102,9 @@ export default function Auth() {
               {...register("password", { required: true })}
               className="w-full border px-3 py-2 rounded"
             />
-            {errors.password && <p className="text-red-500 text-sm">Password is required</p>}
+            {errors.password && (
+              <p className="text-red-500 text-sm">Password is required</p>
+            )}
           </div>
           <button
             type="submit"

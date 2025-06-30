@@ -1,5 +1,3 @@
-// src/components/PatientDashboard.jsx
-import React from "react";
 import { Outlet, NavLink } from "react-router-dom";
 
 export default function PatientDashboard() {
@@ -32,8 +30,6 @@ export default function PatientDashboard() {
           Appointments
         </NavLink>
       </nav>
-
-      {/* Nested routes will render here */}
       <Outlet />
     </div>
   );

@@ -1,10 +1,11 @@
-// src/components/Appointments.jsx
-import React from "react";
+
 import { Link } from "react-router-dom";
 import { mockData } from "../../data/seedUsers";
+import { useApp } from "../../context/AppContext";
 
 export default function Appointments() {
-  const patientId = "p1"; // hardcoded for demo, get from logged-in user in real app
+  const {user} = useApp();
+  const patientId = user.patientId;
 
   const upcomingAppointments = mockData.incidents.filter(
     (incident) =>

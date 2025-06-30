@@ -1,17 +1,22 @@
 // src/components/DashboardHome.jsx
 import React from "react";
 import { mockData } from "../../data/seedUsers";
+import { useApp } from "../../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardHome() {
-  // Get patient data (assuming logged-in patient id "p1")
-  const patient = mockData.patients.find((p) => p.id === "p1");
 
-  // Filter incidents (medical history + appointments)
+  const navigate = useNavigate();
+  const {user} = useApp();
+  if(!user){
+    navigate("/");
+  }
+  const patient = mockData.patients.find(p=> user.patientId===p.id);
   const patientIncidents = mockData.incidents.filter(
     (i) => i.patientId === patient.id
   );
 
-  // Split upcoming vs past
+  
   const now = new Date();
   const upcoming = patientIncidents.filter(
     (i) => new Date(i.appointmentDate) >= now
