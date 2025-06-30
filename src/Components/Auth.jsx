@@ -29,10 +29,12 @@ export default function Auth() {
       setCurrentUser(user);
         notify("success", `Welcome ${user.email}`);
       reset();
+      console.log(user);
+      
       if(user.role === "Admin")
         navigate('/admin/dashboard');
       else
-        navigate('/admin/dashboard');
+        navigate('/patient/dashboard');
       
     } else {
     //   alert("Invalid credentials");
