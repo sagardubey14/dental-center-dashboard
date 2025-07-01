@@ -13,6 +13,7 @@ export const mockData = {
     { id: "11", role: "Patient", email: "charlie@entnt.in", password: "charlie123", patientId: "p8" },
     { id: "12", role: "Patient", email: "olivia@entnt.in", password: "olivia123", patientId: "p9" }
   ],
+  
 
   patients: [
     { id: "p1", name: "John Doe", dob: "1990-05-10", contact: "1234567890", healthInfo: "No allergies" },

@@ -1,10 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import NotificationPopup from "../Components/NotificationPopup";
+import { useNavigate } from "react-router-dom";
 
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  
+  const navigate = useNavigate();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('authUser')));
   const [message, setMessage] = useState(null);
 
@@ -20,7 +21,7 @@ export const AppProvider = ({ children }) => {
   }, [message]);
 
   return (
-    <AppContext.Provider value={{ user, setUser, notify }}>
+    <AppContext.Provider value={{ user, setUser, notify, navigate }}>
       {children}
       {message && (
         <NotificationPopup message={message} onClose={() => setMessage(null)} />
