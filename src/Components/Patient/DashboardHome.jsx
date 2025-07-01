@@ -62,23 +62,6 @@ export default function DashboardHome() {
           )}
         </div>
       </div>
-
-      <div className="border p-4 mb-4">
-        <h3 className="font-semibold mb-2">Prescriptions</h3>
-        <p>(List of active prescriptions)</p>
-      </div>
-
-      <div className="flex gap-4">
-        <div className="border p-4 flex-1">
-          <h3 className="font-semibold mb-2">Billing & Payments</h3>
-          <p>(Total unpaid balance or payment history)</p>
-        </div>
-
-        <div className="border p-4 w-40 text-center">
-          <h3 className="font-semibold mb-2">Contact Provider</h3>
-          <p>Reach out to your healthcare provider</p>
-        </div>
-      </div>
     </div>
   );
 }

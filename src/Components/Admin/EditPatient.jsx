@@ -1,12 +1,18 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { mockData } from "../../data/seedUsers";
+import AddPatient from "./AddPatient";
 
 export default function EditPatient() {
   const { patientId } = useParams();
   const patient = mockData.patients.find(p => p.id === patientId);
-
+  const user = mockData.users.find(u=> u.patientId === patientId);
+  console.log(patient, user);
+  
   if (!patient) return <p>Patient not found</p>;
+  const existingUser = {
+    ...patient, email: user.email
+  };
 
   return (
     <div className="border p-4 mb-4">
@@ -15,6 +21,7 @@ export default function EditPatient() {
       <p>DOB: {patient.dob}</p>
       <p>Contact: {patient.contact}</p>
       <p>Health Info: {patient.healthInfo}</p>
+      <AddPatient data={existingUser}/>
     </div>
   );
 }
