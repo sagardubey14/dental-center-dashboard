@@ -32,13 +32,6 @@ export default function PatientIndex() {
         )}
       </div>
 
-      {/* Add Patient Link */}
-      <div className="flex-1 border p-4">
-        <h2 className="font-semibold mb-2">Add New Patient</h2>
-        <Link to="add" className="text-blue-600 underline">
-          Go to Add Patient Form
-        </Link>
-      </div>
     </div>
   );
 }

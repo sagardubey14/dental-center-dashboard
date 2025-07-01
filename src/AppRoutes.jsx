@@ -1,5 +1,4 @@
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
@@ -22,10 +21,11 @@ import CalendarViewLayout from "./Components/Calendar/CalendarViewLayout";
 import DashboardHome from "./Components/Patient/DashboardHome";
 import Appointments from "./Components/Patient/Appointments";
 import AppointmentDetails from "./Components/Patient/AppointmentDetails";
+import AddAppointmentForm from "./Components/Appointment/AddAppointmentForm";
 
 export default function AppRoutes() {
   return (
-    <Router>
+    <>
       <Routes>
         <Route path="/login" element={<Auth />} />
 
@@ -54,6 +54,7 @@ export default function AppRoutes() {
           element={<AppointmentManagementLayout />}
         >
           <Route index element={<AppointmentIndex />} />
+          <Route path="add" element={<AddAppointmentForm />} />
           <Route path="edit/:appointmentId" element={<EditAppointment />} />
           <Route path="add-cost/:appointmentId" element={<AddCost />} />
           <Route path="uploads/:appointmentId" element={<FileUploads />} />
@@ -64,6 +65,6 @@ export default function AppRoutes() {
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
-    </Router>
+    </>
   );
 }

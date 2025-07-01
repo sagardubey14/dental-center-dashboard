@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useApp } from "../context/AppContext";
-import { useNavigate } from "react-router-dom";
 import { mockData } from "../data/seedUsers";
 
 const users = mockData.users;
@@ -14,8 +13,7 @@ export default function Auth() {
     reset,
     formState: { errors },
   } = useForm();
-  const { notify, user, setUser } = useApp();
-  const navigate = useNavigate();
+  const { notify, user, setUser, navigate } = useApp();
   useEffect(() => {
     const storedUser = localStorage.getItem("authUser");
     if (storedUser) {

@@ -120,10 +120,12 @@ export default function AdminDashboard() {
           <p>Total Revenue: ${totalRevenue}</p>
         </div>
 
-        <div className="border p-4 w-40 text-center">
-          <h2 className="font-semibold mb-2">Add New</h2>
-          <p>Patient</p>
-        </div>
+        <Link to="/admin/patients/add" className="text-blue-600 hover:underline">
+          <div className="border p-4 w-40 text-center">
+            <h2 className="font-semibold mb-2">Add New</h2>
+            <p>Patient</p>
+          </div>
+        </Link>
       </div>
     </div>
   );

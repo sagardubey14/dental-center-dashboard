@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { mockData } from "../../data/seedUsers";
 import DayDetails from "./DayDetails";
+import { useApp } from "../../context/AppContext";
 
 function getDateKey(date) {
   return date.toISOString().split("T")[0];
 }
 
 export default function CalendarViewLayout() {
+  const { navigate } = useApp();
+
   const [view, setView] = useState("monthly");
   const [selectedDate, setSelectedDate] = useState(null);
 
@@ -39,12 +42,23 @@ export default function CalendarViewLayout() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h2 className="text-2xl font-semibold mb-4">Calendar View</h2>
+      <h2 className="text-2xl font-semibold mb-4">
+        {" "}
+        <p
+          className="text-blue-600 cursor-pointer inline"
+          onClick={() => navigate("/admin/dashboard", { replace: true })}
+        >
+          {"<-  "}
+        </p>{" "}
+        Calendar View
+      </h2>
 
       <div className="mb-6">
         <button
           className={`px-4 py-2 rounded ${
-            view === "monthly" ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700"
+            view === "monthly"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-700"
           }`}
           onClick={() => setView("monthly")}
           disabled={view === "monthly"}
@@ -53,7 +67,9 @@ export default function CalendarViewLayout() {
         </button>
         <button
           className={`ml-4 px-4 py-2 rounded ${
-            view === "weekly" ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700"
+            view === "weekly"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-700"
           }`}
           onClick={() => setView("weekly")}
           disabled={view === "weekly"}
@@ -66,7 +82,8 @@ export default function CalendarViewLayout() {
         {(view === "monthly" ? days : weekDays).map((day) => {
           const dateKey = getDateKey(day);
           const hasIncident = !!incidentsByDate[dateKey];
-          const isSelected = selectedDate && getDateKey(selectedDate) === dateKey;
+          const isSelected =
+            selectedDate && getDateKey(selectedDate) === dateKey;
 
           return (
             <div
@@ -75,10 +92,18 @@ export default function CalendarViewLayout() {
               className={`
                 cursor-pointer rounded p-2 text-center select-none
                 ${hasIncident ? "bg-green-100" : "bg-white"}
-                ${isSelected ? "border-2 border-blue-600" : "border border-gray-300"}
+                ${
+                  isSelected
+                    ? "border-2 border-blue-600"
+                    : "border border-gray-300"
+                }
                 hover:bg-blue-100
               `}
-              title={hasIncident ? `${incidentsByDate[dateKey].length} appointment(s)` : ""}
+              title={
+                hasIncident
+                  ? `${incidentsByDate[dateKey].length} appointment(s)`
+                  : ""
+              }
             >
               {day.getDate()}
             </div>
@@ -88,9 +113,14 @@ export default function CalendarViewLayout() {
 
       <div className="mt-8">
         {selectedDate ? (
-          <DayDetails date={selectedDate} incidents={incidentsByDate[getDateKey(selectedDate)] || []} />
+          <DayDetails
+            date={selectedDate}
+            incidents={incidentsByDate[getDateKey(selectedDate)] || []}
+          />
         ) : (
-          <p className="text-gray-600 italic">Click on a day to see scheduled treatments.</p>
+          <p className="text-gray-600 italic">
+            Click on a day to see scheduled treatments.
+          </p>
         )}
       </div>
     </div>
