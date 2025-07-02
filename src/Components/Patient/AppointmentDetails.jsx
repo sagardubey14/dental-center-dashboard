@@ -1,55 +1,84 @@
-
 import { useParams, Link } from "react-router-dom";
 import { mockData } from "../../data/seedUsers";
 
 export default function AppointmentDetails() {
   const { appointmentId } = useParams();
-
   const appointment = mockData.incidents.find((inc) => inc.id === appointmentId);
 
   if (!appointment) {
     return (
-      <div>
-        <p>Appointment not found.</p>
-        <Link to="/patient/dashboard/appointments" className="text-blue-600 hover:underline">
-          Back to Appointments
+      <div className="text-center mt-10 text-gray-600">
+        <p className="mb-4">🚫 Appointment not found.</p>
+        <Link
+          to="/patient/dashboard/appointments"
+          className="text-blue-600 hover:underline"
+        >
+          ← Back to Appointments
         </Link>
       </div>
     );
   }
 
   return (
-    <div>
-      <h2 className="text-lg font-semibold mb-4">Appointment Details</h2>
-      <p>
-        <strong>Title:</strong> {appointment.title}
-      </p>
-      <p>
-        <strong>Description:</strong> {appointment.description}
-      </p>
-      <p>
-        <strong>Comments:</strong> {appointment.comments}
-      </p>
-      <p>
-        <strong>Date & Time:</strong>{" "}
-        {new Date(appointment.appointmentDate).toLocaleString()}
-      </p>
-      <p>
-        <strong>Cost:</strong> ${appointment.cost}
-      </p>
-      <p>
-        <strong>Status:</strong> {appointment.status}
-      </p>
-      <div className="mt-4">
-        <strong>Files:</strong>
+    <div className="bg-white max-w-3xl mx-auto mt-10 p-6 rounded-xl shadow-lg border border-gray-200">
+      {/* Title */}
+      <h2 className="text-2xl font-bold text-blue-800 mb-6 border-b pb-3 flex items-center gap-2">
+        🗓️ Appointment Details
+      </h2>
+
+      {/* Details */}
+      <div className="grid gap-3 text-sm text-gray-800">
+        <p>
+          <span className="font-semibold text-gray-700">Title:</span>{" "}
+          {appointment.title}
+        </p>
+        <p>
+          <span className="font-semibold text-gray-700">Description:</span>{" "}
+          {appointment.description}
+        </p>
+        <p>
+          <span className="font-semibold text-gray-700">Comments:</span>{" "}
+          {appointment.comments || "—"}
+        </p>
+        <p>
+          <span className="font-semibold text-gray-700">Date & Time:</span>{" "}
+          {new Date(appointment.appointmentDate).toLocaleString()}
+        </p>
+        <p>
+          <span className="font-semibold text-gray-700">Cost:</span> $
+          {appointment.cost || 0}
+        </p>
+        <p>
+          <span className="font-semibold text-gray-700">Status:</span>{" "}
+          <span
+            className={`font-bold ${
+              appointment.status === "Completed"
+                ? "text-green-600"
+                : appointment.status === "Scheduled"
+                ? "text-yellow-600"
+                : "text-red-600"
+            }`}
+          >
+            {appointment.status}
+          </span>
+        </p>
+      </div>
+
+      {/* Files */}
+      <div className="mt-6">
+        <h3 className="text-sm font-semibold text-gray-800 mb-2">Attached Files</h3>
         {appointment.files.length === 0 ? (
-          <p>No files attached.</p>
+          <p className="text-sm text-gray-500 italic">No files attached.</p>
         ) : (
-          <ul className="list-disc pl-5">
+          <ul className="list-disc list-inside text-sm space-y-1 text-blue-700">
             {appointment.files.map((file, idx) => (
               <li key={idx}>
-                {/* Normally you would link to the real URL or preview */}
-                <a href={file.url} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">
+                <a
+                  href={file.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:underline"
+                >
                   {file.name}
                 </a>
               </li>
@@ -58,12 +87,15 @@ export default function AppointmentDetails() {
         )}
       </div>
 
-      <Link
-        to="/patient/dashboard/appointments"
-        className="inline-block mt-4 text-blue-600 hover:underline"
-      >
-        &larr; Back to Appointments
-      </Link>
+      {/* Back Link */}
+      <div className="mt-8 text-right">
+        <Link
+          to="/patient/dashboard/appointments"
+          className="text-sm text-blue-600 hover:underline"
+        >
+          ← Back to Appointments
+        </Link>
+      </div>
     </div>
   );
 }

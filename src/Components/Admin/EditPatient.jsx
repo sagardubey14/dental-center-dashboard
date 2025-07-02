@@ -17,23 +17,28 @@ export default function EditPatient() {
     email: user.email,
   };
 
-  return (
-    <div className="border p-4 mb-4">
-      <h2 className="font-semibold mb-2">
-        {" "}
-        <p
-          className="text-blue-600 cursor-pointer inline"
-          onClick={() => navigate("/admin/patients", { replace: true })}
-        >
-          {"<-  "}
-        </p>{" "}
-        Edit Patient Info
-      </h2>
-      <p>Name: {patient.name}</p>
-      <p>DOB: {patient.dob}</p>
-      <p>Contact: {patient.contact}</p>
-      <p>Health Info: {patient.healthInfo}</p>
-      <AddPatient data={existingUser} />
-    </div>
-  );
-}
+
+  
+    return (
+      <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+        <h2 className="text-xl font-semibold text-blue-800 mb-4 flex items-center gap-2">
+          <span
+            className="text-blue-600 hover:underline cursor-pointer"
+            onClick={() => navigate("/admin/patients", { replace: true })}
+          >
+            ← Back
+          </span>
+          Edit Patient Info
+        </h2>
+  
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-800 text-sm mb-6">
+          <p><strong>Name:</strong> {patient.name}</p>
+          <p><strong>DOB:</strong> {patient.dob}</p>
+          <p><strong>Contact:</strong> {patient.contact}</p>
+          <p><strong>Health Info:</strong> {patient.healthInfo}</p>
+        </div>
+  
+        <AddPatient data={existingUser} />
+      </div>
+    );
+  }

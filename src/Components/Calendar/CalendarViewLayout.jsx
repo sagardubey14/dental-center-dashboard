@@ -41,44 +41,55 @@ export default function CalendarViewLayout() {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h2 className="text-2xl font-semibold mb-4">
-        {" "}
-        <p
-          className="text-blue-600 cursor-pointer inline"
+    <div
+    className="p-6 max-w-5xl mx-auto animate-fade-in min-h-screen">
+      <h2 className="text-3xl font-semibold text-blue-900 mb-6 flex items-center gap-2">
+        <span
+          className="text-cyan-600 hover:text-cyan-800 hover:underline cursor-pointer transition-colors duration-300"
           onClick={() => navigate("/admin/dashboard", { replace: true })}
         >
-          {"<-  "}
-        </p>{" "}
-        Calendar View
+          ←
+        </span>
+        <span className="relative group">
+          Calendar View
+          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-500 transition-all duration-300 group-hover:w-full rounded-full"></span>
+        </span>
       </h2>
 
-      <div className="mb-6">
-        <button
-          className={`px-4 py-2 rounded ${
-            view === "monthly"
-              ? "bg-blue-600 text-white"
-              : "bg-gray-200 text-gray-700"
-          }`}
-          onClick={() => setView("monthly")}
-          disabled={view === "monthly"}
-        >
-          Monthly View
-        </button>
-        <button
-          className={`ml-4 px-4 py-2 rounded ${
-            view === "weekly"
-              ? "bg-blue-600 text-white"
-              : "bg-gray-200 text-gray-700"
-          }`}
-          onClick={() => setView("weekly")}
-          disabled={view === "weekly"}
-        >
-          Weekly View
-        </button>
+      {/* View Toggle Buttons */}
+      <div className="flex gap-4 mb-6">
+        {["monthly", "weekly"].map((type) => (
+          <button
+            key={type}
+            className={`px-4 py-2 rounded-lg font-medium text-sm shadow-md transition duration-300 transform ${
+              view === type
+                ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white scale-105"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            }`}
+            onClick={() => setView(type)}
+            disabled={view === type}
+          >
+            {type === "monthly" ? "📅 Monthly" : "📆 Weekly"}
+          </button>
+        ))}
       </div>
 
-      <div className="grid grid-cols-7 gap-3 border border-gray-300 rounded p-3 max-w-xl">
+      {/* Appointment Detail or Prompt */}
+      <div className="mb-6 min-h-[50px]">
+        {selectedDate ? (
+          <DayDetails
+            date={selectedDate}
+            incidents={incidentsByDate[getDateKey(selectedDate)] || []}
+          />
+        ) : (
+          <p className="text-gray-500 italic text-sm text-center">
+            Click a day to view scheduled appointments.
+          </p>
+        )}
+      </div>
+
+      {/* Calendar Grid */}
+      <div className="grid grid-cols-7 gap-2 border border-gray-200 rounded-xl p-4 shadow-md bg-white animate-fade-slide-up">
         {(view === "monthly" ? days : weekDays).map((day) => {
           const dateKey = getDateKey(day);
           const hasIncident = !!incidentsByDate[dateKey];
@@ -90,15 +101,20 @@ export default function CalendarViewLayout() {
               key={dateKey}
               onClick={() => handleDayClick(day)}
               className={`
-                cursor-pointer rounded p-2 text-center select-none
-                ${hasIncident ? "bg-green-100" : "bg-white"}
-                ${
-                  isSelected
-                    ? "border-2 border-blue-600"
-                    : "border border-gray-300"
-                }
-                hover:bg-blue-100
-              `}
+            text-sm text-center font-medium select-none rounded-lg cursor-pointer py-2
+            transition-all duration-200 ease-in-out
+            ${
+              hasIncident
+                ? "bg-emerald-100 text-emerald-800"
+                : "bg-gray-50 text-gray-700"
+            }
+            ${
+              isSelected
+                ? "ring-2 ring-cyan-500 bg-cyan-100 scale-105"
+                : "border border-gray-200"
+            }
+            hover:bg-blue-50 hover:shadow-sm
+          `}
               title={
                 hasIncident
                   ? `${incidentsByDate[dateKey].length} appointment(s)`
@@ -109,19 +125,6 @@ export default function CalendarViewLayout() {
             </div>
           );
         })}
-      </div>
-
-      <div className="mt-8">
-        {selectedDate ? (
-          <DayDetails
-            date={selectedDate}
-            incidents={incidentsByDate[getDateKey(selectedDate)] || []}
-          />
-        ) : (
-          <p className="text-gray-600 italic">
-            Click on a day to see scheduled treatments.
-          </p>
-        )}
       </div>
     </div>
   );

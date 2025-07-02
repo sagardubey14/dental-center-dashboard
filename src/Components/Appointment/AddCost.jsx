@@ -34,81 +34,68 @@ export default function AddCost() {
   };
 
   if (!incident) return <p>Appointment not found</p>;
+return(
+  <div className="bg-white rounded-xl shadow-lg p-6">
+  <h2 className="text-xl font-bold text-blue-800 mb-4 flex items-center gap-2">
+    <span
+      className="text-blue-600 hover:underline cursor-pointer"
+      onClick={() => navigate("/admin/appointments", { replace: true })}
+    >
+      ← Back
+    </span>
+    Add Cost
+  </h2>
 
-  return (
-    <div className="border p-4">
-      <h1 className="text-xl font-semibold mb-4 border-b pb-2">
-        <p
-          className="text-blue-600 cursor-pointer inline"
-          onClick={() => navigate("/admin/appointments", { replace: true })}
-        >
-          {"<-  "}
-        </p>{" "}
-        Add Cost
-      </h1>
-      <h2 className="font-semibold mb-2">Add Cost / Treatment Details</h2>
-      <p>
-        <strong>Current Cost:</strong> ${incident.cost}
-      </p>
-      <p>
-        <strong>Treatment Notes:</strong> {incident.comments}
-      </p>
+  <div className="text-sm mb-4">
+    <p><strong>Current Cost:</strong> ${incident.cost}</p>
+    <p><strong>Notes:</strong> {incident.comments}</p>
+  </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
-        <div className="mb-4">
-          <label
-            htmlFor="cost"
-            className="block text-sm font-medium text-gray-700"
-          >
-            New Cost
-          </label>
-          <input
-            id="cost"
-            type="number"
-            step="0.01"
-            {...register("cost", {
-              required: "Cost is required",
-              min: { value: 0, message: "Cost cannot be negative" },
-            })}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded"
-          />
-          {errors.cost && (
-            <span className="text-red-500 text-xs">{errors.cost.message}</span>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="treatmentNotes"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Treatment Notes
-          </label>
-          <textarea
-            id="treatmentNotes"
-            rows="4"
-            {...register("treatmentNotes", {
-              required: "Treatment notes are required",
-            })}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded"
-          />
-          {errors.treatmentNotes && (
-            <span className="text-red-500 text-xs">
-              {errors.treatmentNotes.message}
-            </span>
-          )}
-        </div>
-
-        <div className="flex justify-between items-center">
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          >
-            Save
-          </button>
-          {formStatus && <p className="text-sm text-green-600">{formStatus}</p>}
-        </div>
-      </form>
+  <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+    {/* New Cost */}
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-1">New Cost</label>
+      <input
+        type="number"
+        step="0.01"
+        {...register("cost", {
+          required: "Cost is required",
+          min: { value: 0, message: "Cost must be positive" },
+        })}
+        className="w-full border border-gray-300 rounded-lg px-4 py-2"
+      />
+      {errors.cost && (
+        <p className="text-xs text-red-500 mt-1">{errors.cost.message}</p>
+      )}
     </div>
-  );
+
+    {/* Notes */}
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-1">Treatment Notes</label>
+      <textarea
+        rows="4"
+        {...register("treatmentNotes", {
+          required: "Treatment notes are required",
+        })}
+        className="w-full border border-gray-300 rounded-lg px-4 py-2"
+      />
+      {errors.treatmentNotes && (
+        <p className="text-xs text-red-500 mt-1">{errors.treatmentNotes.message}</p>
+      )}
+    </div>
+
+    <div className="flex justify-between items-center">
+      <button
+        type="submit"
+        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow"
+      >
+        💾 Save
+      </button>
+      {formStatus && (
+        <p className="text-green-600 text-sm">{formStatus}</p>
+      )}
+    </div>
+  </form>
+</div>
+);
 }

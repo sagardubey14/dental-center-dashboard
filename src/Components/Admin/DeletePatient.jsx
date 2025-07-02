@@ -28,21 +28,23 @@ export default function DeletePatient() {
   };
 
   return (
-    <div className="border p-4">
-      <h2 className="font-semibold mb-2">
-        {" "}
-        <p className="text-blue-600 cursor-pointer inline" onClick={()=>navigate("/admin/patients",{ replace:true})}>
-          {"<-  "}
-        </p>
+    <div className="bg-white rounded-xl shadow-lg p-6">
+      <h2 className="text-xl font-semibold text-red-600 mb-4 flex items-center gap-2">
+        <span
+          className="text-blue-600 hover:underline cursor-pointer"
+          onClick={() => navigate("/admin/patients", { replace: true })}
+        >
+          ← Back
+        </span>
         Delete Patient
       </h2>
-      <p>Are you sure you want to delete patient ID: {patientId}?</p>
+      <p className="text-gray-700 mb-4">Are you sure you want to delete patient ID: <strong>{patientId}</strong>?</p>
       <button
         onClick={handleDelete}
-        className="mt-2 px-4 py-2 bg-red-600 text-white rounded"
+        className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow transition"
       >
         Confirm Delete
       </button>
     </div>
   );
-}
+}  

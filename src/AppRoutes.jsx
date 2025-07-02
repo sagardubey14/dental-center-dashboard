@@ -1,8 +1,4 @@
-import {
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Auth from "./Components/Auth";
 import AdminDashboard from "./Components/Admin/AdminDashboard";
@@ -25,7 +21,12 @@ import AddAppointmentForm from "./Components/Appointment/AddAppointmentForm";
 
 export default function AppRoutes() {
   return (
-    <>
+    <div
+      style={{
+        backgroundImage: 'url("/17395.jpg")',
+        backgroundSize: "contain",
+      }}
+    >
       <Routes>
         <Route path="/login" element={<Auth />} />
 
@@ -65,6 +66,6 @@ export default function AppRoutes() {
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
-    </>
+    </div>
   );
 }

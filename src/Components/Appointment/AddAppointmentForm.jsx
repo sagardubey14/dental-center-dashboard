@@ -23,70 +23,69 @@ export default function AddAppointmentForm() {
     });
     reset();
   };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-      <h1 className="text-xl font-semibold mb-4 border-b pb-2">
-        <p
-          className="text-blue-600 cursor-pointer inline"
-          onClick={() => navigate("/admin/appointments", { replace: true })}
-        >
-          {"<-  "}
-        </p>{" "}
-        Add New Appointment
-      </h1>
+  <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white rounded-xl shadow p-6">
+  <h2 className="text-xl font-bold text-blue-800 border-b pb-3 flex items-center gap-2">
+    <span
+      className="text-blue-600 hover:underline cursor-pointer"
+      onClick={() => navigate("/admin/appointments", { replace: true })}
+    >
+      ← Back
+    </span>
+    Add New Appointment
+  </h2>
 
-      {/* Patient */}
-      <div>
-        <label className="block text-sm font-medium">Patient</label>
-        <select
-          {...register("patientId", { required: true })}
-          className="border rounded w-full p-1"
-        >
-          <option value="">Select a patient</option>
-          {patients.map((p) => (
-            <option key={p.id} value={p.id}>
-              {p.name}
-            </option>
-          ))}
-        </select>
-      </div>
+  {/* Patient Select */}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">Select Patient</label>
+    <select
+      {...register("patientId", { required: true })}
+      className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400"
+    >
+      <option value="">-- Choose --</option>
+      {patients.map((p) => (
+        <option key={p.id} value={p.id}>{p.name}</option>
+      ))}
+    </select>
+  </div>
 
-      {/* Title */}
-      <div>
-        <label className="block text-sm font-medium">Title</label>
-        <input
-          {...register("title", { required: true })}
-          className="border rounded w-full p-1"
-        />
-      </div>
+  {/* Title */}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+    <input
+      {...register("title", { required: true })}
+      className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400"
+      placeholder="e.g., Tooth Extraction"
+    />
+  </div>
 
-      {/* Description */}
-      <div>
-        <label className="block text-sm font-medium">Description</label>
-        <input
-          {...register("description")}
-          className="border rounded w-full p-1"
-        />
-      </div>
+  {/* Description */}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+    <input
+      {...register("description")}
+      className="w-full border border-gray-300 rounded-lg px-4 py-2"
+      placeholder="Brief notes (optional)"
+    />
+  </div>
 
-      {/* Appointment Date */}
-      <div>
-        <label className="block text-sm font-medium">Appointment Date</label>
-        <input
-          type="datetime-local"
-          {...register("appointmentDate", { required: true })}
-          className="border rounded w-full p-1"
-        />
-      </div>
+  {/* Appointment Date */}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">Appointment Date</label>
+    <input
+      type="datetime-local"
+      {...register("appointmentDate", { required: true })}
+      className="w-full border border-gray-300 rounded-lg px-4 py-2"
+    />
+  </div>
 
-      {/* Submit */}
-      <button
-        type="submit"
-        className="bg-blue-600 text-white px-4 py-1 rounded"
-      >
-        Add Appointment
-      </button>
-    </form>
+  {/* Submit */}
+  <button
+    type="submit"
+    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg shadow transition"
+  >
+    ➕ Add Appointment
+  </button>
+</form>
   );
 }

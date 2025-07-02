@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useApp } from "../context/AppContext";
 import { mockData } from "../data/seedUsers";
@@ -6,7 +6,6 @@ import { mockData } from "../data/seedUsers";
 const users = mockData.users;
 
 export default function Auth() {
-  const [currentUser, setCurrentUser] = useState(null);
   const {
     register,
     handleSubmit,
@@ -14,12 +13,6 @@ export default function Auth() {
     formState: { errors },
   } = useForm();
   const { notify, user, setUser, navigate } = useApp();
-  useEffect(() => {
-    const storedUser = localStorage.getItem("authUser");
-    if (storedUser) {
-      setCurrentUser(JSON.parse(storedUser));
-    }
-  }, []);
 
   const onSubmit = (data) => {
     const user = users.find(
@@ -27,7 +20,6 @@ export default function Auth() {
     );
     if (user) {
       localStorage.setItem("authUser", JSON.stringify(user));
-      setCurrentUser(user);
       notify("success", `Welcome ${user.email}`);
       reset();
       setUser(user);
@@ -44,74 +36,70 @@ export default function Auth() {
     }
   }, [user, navigate]);
 
-  const logout = () => {
-    localStorage.removeItem("authUser");
-    setCurrentUser(null);
-  };
-
-  if (currentUser) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="bg-white p-6 rounded shadow w-full max-w-md text-center">
-          <h2 className="text-xl font-semibold mb-4">
-            Welcome, {currentUser.role === "Admin" ? "Dentist" : "Patient"}
-          </h2>
-          <p className="mb-4">Logged in as: {currentUser.email}</p>
-          {currentUser.role === "Admin" ? (
-            <p className="text-blue-600">
-              You have access to the Admin (Dentist) Dashboard
-            </p>
-          ) : (
-            <p className="text-green-600">
-              You have access to the Patient Portal
-            </p>
-          )}
-          <button
-            onClick={logout}
-            className="mt-6 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
-          >
-            Logout
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md bg-white p-6 rounded shadow">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Login</h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <div
+      className="min-h-screen bg-cover bg-center flex items-center justify-center px-4"
+      style={{
+        backgroundImage: 'url("/7701518.jpg")',  
+      }}
+    >
+      <div className="bg-white bg-opacity-80 backdrop-blur-md p-8 rounded-3xl shadow-2xl w-full max-w-md animate-fadeIn">
+        <h2 className="text-4xl font-extrabold text-teal-700 mb-8 text-center tracking-wide">
+          Dental Portal Login
+        </h2>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
-            <label className="block mb-1">Email</label>
+            <label className="block text-sm font-semibold text-teal-800 mb-2">
+              Email Address
+            </label>
             <input
               type="email"
               {...register("email", { required: true })}
-              className="w-full border px-3 py-2 rounded"
+              className="w-full border border-teal-300 focus:ring-2 focus:ring-teal-400 focus:border-teal-500 px-5 py-3 rounded-xl shadow-sm placeholder-teal-300 transition"
+              placeholder="you@example.com"
             />
             {errors.email && (
-              <p className="text-red-500 text-sm">Email is required</p>
+              <p className="text-red-500 text-sm mt-1 font-medium">
+                Email is required
+              </p>
             )}
           </div>
+
           <div>
-            <label className="block mb-1">Password</label>
+            <label className="block text-sm font-semibold text-teal-800 mb-2">
+              Password
+            </label>
             <input
               type="password"
               {...register("password", { required: true })}
-              className="w-full border px-3 py-2 rounded"
+              className="w-full border border-teal-300 focus:ring-2 focus:ring-teal-400 focus:border-teal-500 px-5 py-3 rounded-xl shadow-sm placeholder-teal-300 transition"
+              placeholder="••••••••"
             />
             {errors.password && (
-              <p className="text-red-500 text-sm">Password is required</p>
+              <p className="text-red-500 text-sm mt-1 font-medium">
+                Password is required
+              </p>
             )}
           </div>
+
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+            className="w-full bg-teal-600 hover:bg-teal-700 transition text-white py-3 rounded-xl font-bold tracking-wide shadow-lg"
           >
             Login
           </button>
         </form>
       </div>
+
+      <style>{`
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.6s ease forwards;
+    }
+  `}</style>
     </div>
   );
 }
