@@ -1,30 +1,34 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { mockData } from "../../data/seedUsers";
 import { useApp } from "../../context/AppContext";
 
 export default function DeletePatient() {
   const { patientId } = useParams();
-  const {navigate} = useApp();
+  const {
+    navigate,
+    users,
+    patients,
+    setUsers,
+    setPatients,
+    incidents,
+    setIncidents,
+    notify,
+  } = useApp();
+
   const handleDelete = () => {
-    const patientIndex = mockData.patients.findIndex((p) => p.id === patientId);
-    if (patientIndex !== -1) {
-      mockData.patients.splice(patientIndex, 1);
-    }
+    const updatedPatients = patients.filter((p) => p.id !== patientId);
+    setPatients(updatedPatients);
 
-    const userIndex = mockData.users.findIndex(
-      (user) => user.patientId === patientId
-    );
-    if (userIndex !== -1) {
-      mockData.users.splice(userIndex, 1);
-    }
+    const updatedUsers = users.filter((user) => user.patientId !== patientId);
+    setUsers(updatedUsers);
 
-    mockData.incidents = mockData.incidents.filter(
+    const updatedIncidents = incidents.filter(
       (inc) => inc.patientId !== patientId
     );
+    setIncidents(updatedIncidents);
+    notify("success", `Patient ${patientId} deleted`);
 
-    alert(`Patient ${patientId} deleted`);
-    navigate("/admin/patients",  { replace: true });
+    navigate("/admin/patients", { replace: true });
   };
 
   return (
@@ -38,7 +42,10 @@ export default function DeletePatient() {
         </span>
         Delete Patient
       </h2>
-      <p className="text-gray-700 mb-4">Are you sure you want to delete patient ID: <strong>{patientId}</strong>?</p>
+      <p className="text-gray-700 mb-4">
+        Are you sure you want to delete patient ID: <strong>{patientId}</strong>
+        ?
+      </p>
       <button
         onClick={handleDelete}
         className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow transition"
@@ -47,4 +54,4 @@ export default function DeletePatient() {
       </button>
     </div>
   );
-}  
+}

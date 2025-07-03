@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { mockData } from "../../data/seedUsers";
 import { useApp } from "../../context/AppContext";
 
 export default function Appointments() {

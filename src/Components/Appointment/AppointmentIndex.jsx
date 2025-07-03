@@ -1,16 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { mockData } from "../../data/seedUsers";
+import { useApp } from "../../context/AppContext";
 
 export default function AppointmentIndex() {
-  const incidents = mockData.incidents;
+  const {incidents}= useApp()
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 sm:gap-0">
-        <h2 className="text-2xl font-bold text-blue-800">Appointments</h2>
+    <div className="max-h-screen overflow-auto rounded-2xl shadow-lg p-2"
+          style={{ backgroundImage: "url('/bglist.jpg')" }}
+    >
+      <div className="flex flex-row sm:flex-row  items-start sm:items-center mb-6 gap-4 sm:gap-0">
+        <h2 className="md:text-2xl text-4xs font-bold text-blue-800">Appointments</h2>
         <Link
           to="/admin/appointments/add"
-          className="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 whitespace-nowrap"
+          className="bg-blue-600 md:ml-5 md:text-2xl text-4xs text-white p-2 md:px-4 md:py-2 rounded shadow hover:bg-blue-700 whitespace-nowrap"
         >
           ➕ Add Appointment
         </Link>

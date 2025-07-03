@@ -39,7 +39,8 @@ export default function CalendarViewLayout() {
   };
 
   return (
-    <div className="p-6 max-w-5xl mx-auto animate-fade-in min-h-screen">
+    <div className="p-6  mx-auto animate-fade-in min-h-screen bg-cover bg-no-repeat bg-center "
+      style={{ backgroundImage: "url('/patientpage.jpg')" }}>
       <h2 className="text-3xl font-semibold text-blue-900 mb-6 flex items-center gap-2">
         <span
           className="text-cyan-600 hover:text-cyan-800 hover:underline cursor-pointer transition-colors duration-300"
@@ -83,7 +84,7 @@ export default function CalendarViewLayout() {
         )}
       </div>
 
-      <div className="grid grid-cols-7 gap-2 border border-gray-200 rounded-xl p-4 shadow-md bg-white animate-fade-slide-up">
+      <div className="ml-auto mr-auto max-w-5xl grid grid-cols-7 gap-2 border border-gray-200 rounded-xl p-4 shadow-md bg-white animate-fade-slide-up">
         {(view === "monthly" ? days : weekDays).map((day) => {
           const dateKey = getDateKey(day);
           const hasIncident = !!incidentsByDate[dateKey];

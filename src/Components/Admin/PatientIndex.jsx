@@ -1,14 +1,19 @@
 import { Link } from "react-router-dom";
-import { mockData } from "../../data/seedUsers"; // Adjust path based on your file structure
+import { useApp } from "../../context/AppContext";
 
 export default function PatientIndex() {
-  const patients = mockData.patients;
+  const { patients } = useApp();
 
   return (
-    <div className="grid gap-6">
-      <div className="bg-white rounded-2xl shadow-lg p-6">
-        <h2 className="text-2xl font-bold text-blue-800 mb-6">🧑‍⚕️ Patient Directory</h2>
-  
+    <div
+      className="grid gap-6 max-h-screen overflow-auto"
+      style={{ backgroundImage: "url('/bglist.jpg')" }}
+    >
+      <div className="rounded-2xl shadow-lg p-6">
+        <h2 className="text-xl  md:text-2xl font-bold text-blue-800 mb-6">
+          🧑‍⚕️ Patient Directory
+        </h2>
+
         {patients.length === 0 ? (
           <p className="text-gray-600 italic">No patients available.</p>
         ) : (
@@ -24,17 +29,27 @@ export default function PatientIndex() {
                     {patient.name?.[0]?.toUpperCase() || "P"}
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-blue-900">{patient.name}</h3>
-                    <p className="text-sm text-gray-500">Patient ID: {patient.id}</p>
+                    <h3 className="text-lg font-semibold text-blue-900">
+                      {patient.name}
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      Patient ID: {patient.id}
+                    </p>
                   </div>
                 </div>
-  
+
                 {/* Info */}
                 <div className="text-sm text-gray-700 space-y-1">
-                  <p><span className="font-medium text-gray-600">DOB:</span> {patient.dob}</p>
-                  <p><span className="font-medium text-gray-600">Contact:</span> {patient.contact}</p>
+                  <p>
+                    <span className="font-medium text-gray-600">DOB:</span>{" "}
+                    {patient.dob}
+                  </p>
+                  <p>
+                    <span className="font-medium text-gray-600">Contact:</span>{" "}
+                    {patient.contact}
+                  </p>
                 </div>
-  
+
                 {/* Actions */}
                 <div className="mt-4 flex justify-between items-center">
                   <span className="inline-block bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
@@ -62,4 +77,4 @@ export default function PatientIndex() {
       </div>
     </div>
   );
-}  
+}

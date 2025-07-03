@@ -6,10 +6,9 @@ export default function PatientManagement() {
   const { navigate } = useApp();
 
   return (
-    <div 
-    className="min-h-screen bg-gradient-to-tr from-blue-50 to-cyan-100 p-6 md:p-10 animate-fade-in">
-      <div className="max-w-5xl mx-auto bg-white shadow-2xl rounded-3xl p-6 md:p-10 transition-all duration-500 hover:shadow-blue-200">
-        <h1 className="text-3xl font-bold text-blue-900 mb-6 border-b border-blue-200 pb-4 flex items-center gap-3">
+    <div className="bg-gradient-to-tr from-blue-50 to-cyan-100 p-2 md:px-6 animate-fade-in">
+      <div className="mx-auto bg-white shadow-2xl p-1 md:p-6 transition-all duration-500 hover:shadow-blue-200">
+        <h1 className="sm:text-3xl text-xl font-bold text-blue-900 mb-4 border-b border-blue-200 pb-3 flex items-center gap-3 ml-5">
           <span
             className="text-cyan-600 hover:underline hover:text-cyan-800 cursor-pointer transition-colors duration-300"
             onClick={() => navigate("/admin/dashboard", { replace: true })}

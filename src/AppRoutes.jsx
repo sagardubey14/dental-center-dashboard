@@ -18,29 +18,17 @@ import DashboardHome from "./Components/Patient/DashboardHome";
 import Appointments from "./Components/Patient/Appointments";
 import AppointmentDetails from "./Components/Patient/AppointmentDetails";
 import AddAppointmentForm from "./Components/Appointment/AddAppointmentForm";
+import RequireRole from "./Components/RequireRole";
+import NotFound from "./Components/NotFound";
 
 export default function AppRoutes() {
   return (
-    <div
-      style={{
-        backgroundImage: 'url("/17395.jpg")',
-        backgroundSize: "contain",
-      }}
-    >
-      <Routes>
-        <Route path="/login" element={<Auth />} />
+    <Routes>
+      <Route path="/login" element={<Auth />} />
 
+      <Route element={<RequireRole role="Admin" />}>
         <Route path="/admin/dashboard" element={<AdminDashboard />}>
           <Route index element={<div>Admin Dashboard</div>} />
-        </Route>
-
-        <Route path="/patient/dashboard" element={<PatientDashboard />}>
-          <Route index element={<DashboardHome />} />
-          <Route path="appointments" element={<Appointments />} />
-          <Route
-            path="appointments/:appointmentId"
-            element={<AppointmentDetails />}
-          />
         </Route>
 
         <Route path="/admin/patients" element={<PatientManagement />}>
@@ -62,10 +50,21 @@ export default function AppRoutes() {
         </Route>
 
         <Route path="/admin/calendar" element={<CalendarViewLayout />} />
+      </Route>
 
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="*" element={<div>404 - Page Not Found</div>} />
-      </Routes>
-    </div>
+      <Route element={<RequireRole role="Patient" />}>
+        <Route path="/patient/dashboard" element={<PatientDashboard />}>
+          <Route index element={<DashboardHome />} />
+          <Route path="appointments" element={<Appointments />} />
+          <Route
+            path="appointments/:appointmentId"
+            element={<AppointmentDetails />}
+          />
+        </Route>
+      </Route>
+
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }

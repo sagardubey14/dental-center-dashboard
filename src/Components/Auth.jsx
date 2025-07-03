@@ -19,7 +19,7 @@ export default function Auth() {
     console.log(data, users);
     
     if (user) {
-      // localStorage.setItem("authUser", JSON.stringify(user));
+      localStorage.setItem("authUser", JSON.stringify(user));
       notify("success", `Welcome ${user.email}`);
       reset();
       setUser(user);
