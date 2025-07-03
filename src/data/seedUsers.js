@@ -36,10 +36,7 @@ export const mockData = {
       appointmentDate: "2025-07-01T10:00:00",
       cost: 80,
       status: "Completed",
-      files: [
-        { name: "invoice.pdf", url: "base64string-or-blob-url" },
-        { name: "xray.png", url: "base64string-or-blob-url" }
-      ]
+      files: []
     },
     {
       id: "i2",
@@ -50,9 +47,7 @@ export const mockData = {
       appointmentDate: "2025-07-02T11:30:00",
       cost: 50,
       status: "Completed",
-      files: [
-        { name: "prescription.pdf", url: "base64string-or-blob-url" }
-      ]
+      files: []
     },
     {
       id: "i3",
@@ -63,9 +58,7 @@ export const mockData = {
       appointmentDate: "2025-07-05T14:00:00",
       cost: 100,
       status: "Pending",
-      files: [
-        { name: "cavity-report.pdf", url: "base64string-or-blob-url" }
-      ]
+      files: []
     },
     {
       id: "i4",
@@ -76,9 +69,7 @@ export const mockData = {
       appointmentDate: "2025-07-06T09:30:00",
       cost: 120,
       status: "Scheduled",
-      files: [
-        { name: "cleaning-report.pdf", url: "base64string-or-blob-url" }
-      ]
+      files: []
     },
     {
       id: "i11",
@@ -89,9 +80,7 @@ export const mockData = {
       appointmentDate: "2025-06-06T09:30:00",
       cost: 120,
       status: "Scheduled",
-      files: [
-        { name: "cleaning-report.pdf", url: "base64string-or-blob-url" }
-      ]
+      files: []
     },
     {
       id: "i5",
@@ -102,9 +91,7 @@ export const mockData = {
       appointmentDate: "2025-07-07T10:15:00",
       cost: 70,
       status: "Completed",
-      files: [
-        { name: "whitening-report.pdf", url: "base64string-or-blob-url" }
-      ]
+      files: []
     },
     {
       id: "i6",
@@ -115,9 +102,7 @@ export const mockData = {
       appointmentDate: "2025-07-08T13:00:00",
       cost: 90,
       status: "Pending",
-      files: [
-        { name: "gum-treatment-report.pdf", url: "base64string-or-blob-url" }
-      ]
+      files: []
     },
     {
       id: "i7",
@@ -128,9 +113,7 @@ export const mockData = {
       appointmentDate: "2025-07-09T11:45:00",
       cost: 65,
       status: "Scheduled",
-      files: [
-        { name: "sensitivity-report.pdf", url: "base64string-or-blob-url" }
-      ]
+      files: []
     },
     {
       id: "i8",
@@ -141,9 +124,7 @@ export const mockData = {
       appointmentDate: "2025-07-10T15:30:00",
       cost: 110,
       status: "Completed",
-      files: [
-        { name: "bruxism-report.pdf", url: "base64string-or-blob-url" }
-      ]
+      files: []
     },
     {
       id: "i9",
@@ -154,9 +135,7 @@ export const mockData = {
       appointmentDate: "2025-07-12T16:00:00",
       cost: 130,
       status: "Scheduled",
-      files: [
-        { name: "xray-report.pdf", url: "base64string-or-blob-url" }
-      ]
+      files: []
     },
     {
       id: "i10",
@@ -167,9 +146,7 @@ export const mockData = {
       appointmentDate: "2025-07-15T08:30:00",
       cost: 40,
       status: "Scheduled",
-      files: [
-        { name: "post-treatment-report.pdf", url: "base64string-or-blob-url" }
-      ]
+      files: []
     }
   ]
 };
