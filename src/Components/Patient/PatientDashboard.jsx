@@ -2,10 +2,11 @@ import { Outlet, NavLink } from "react-router-dom";
 
 export default function PatientDashboard() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white py-10 px-4">
-      <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-200 p-8">
+    <div
+     className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-sky-100  py-10 px-2">
+      <div className="max-w-5xl mx-auto bg-gradient-to-br from-teal-50 via-white to-sky-100 rounded-2xl shadow-xl p-4">
         {/* Header */}
-        <h1 className="text-3xl font-extrabold text-blue-800 mb-8 border-b pb-4">
+        <h1 className="text-2xl sm:text-3xl  font-extrabold text-blue-800 mb-8 border-b pb-4">
           🦷 Patient Dashboard
         </h1>
 

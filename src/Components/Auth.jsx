@@ -1,9 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useApp } from "../context/AppContext";
-import { mockData } from "../data/seedUsers";
-
-const users = mockData.users;
 
 export default function Auth() {
   const {
@@ -12,14 +9,17 @@ export default function Auth() {
     reset,
     formState: { errors },
   } = useForm();
-  const { notify, user, setUser, navigate } = useApp();
+
+  const { notify, user, setUser, navigate, users } = useApp();
 
   const onSubmit = (data) => {
     const user = users.find(
       (u) => u.email === data.email && u.password === data.password
     );
+    console.log(data, users);
+    
     if (user) {
-      localStorage.setItem("authUser", JSON.stringify(user));
+      // localStorage.setItem("authUser", JSON.stringify(user));
       notify("success", `Welcome ${user.email}`);
       reset();
       setUser(user);
@@ -40,7 +40,7 @@ export default function Auth() {
     <div
       className="min-h-screen bg-cover bg-center flex items-center justify-center px-4"
       style={{
-        backgroundImage: 'url("/7701518.jpg")',  
+        backgroundImage: 'url("/7701518.jpg")',
       }}
     >
       <div className="bg-white bg-opacity-80 backdrop-blur-md p-8 rounded-3xl shadow-2xl w-full max-w-md animate-fadeIn">
@@ -92,14 +92,14 @@ export default function Auth() {
       </div>
 
       <style>{`
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-    .animate-fadeIn {
-      animation: fadeIn 0.6s ease forwards;
-    }
-  `}</style>
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px);}
+        to { opacity: 1; transform: translateY(0);}
+      }
+      .animate-fadeIn {
+        animation: fadeIn 0.6s ease forwards;
+      }
+    `}</style>
     </div>
   );
 }

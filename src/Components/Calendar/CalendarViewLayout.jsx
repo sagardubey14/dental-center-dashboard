@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { mockData } from "../../data/seedUsers";
 import DayDetails from "./DayDetails";
 import { useApp } from "../../context/AppContext";
 
@@ -8,20 +7,20 @@ function getDateKey(date) {
 }
 
 export default function CalendarViewLayout() {
-  const { navigate } = useApp();
-
+  const { navigate, incidents } = useApp();
   const [view, setView] = useState("monthly");
   const [selectedDate, setSelectedDate] = useState(null);
 
   const incidentsByDate = {};
-  mockData.incidents.forEach((incident) => {
+  incidents.forEach((incident) => {
     const dateKey = incident.appointmentDate.split("T")[0];
     if (!incidentsByDate[dateKey]) incidentsByDate[dateKey] = [];
     incidentsByDate[dateKey].push(incident);
   });
 
-  const year = 2025;
-  const month = 6; // July (0-indexed)
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
   const days = [];
@@ -29,8 +28,7 @@ export default function CalendarViewLayout() {
     days.push(new Date(year, month, i));
   }
 
-  // Fixed week example (29 June 2025 Sunday to 5 July 2025 Saturday)
-  const startOfWeek = new Date(2025, 5, 29);
+  const startOfWeek = new Date(year, month, 1);
   const weekDays = [];
   for (let i = 0; i < 7; i++) {
     weekDays.push(new Date(startOfWeek.getTime() + i * 86400000));
@@ -41,8 +39,7 @@ export default function CalendarViewLayout() {
   };
 
   return (
-    <div
-    className="p-6 max-w-5xl mx-auto animate-fade-in min-h-screen">
+    <div className="p-6 max-w-5xl mx-auto animate-fade-in min-h-screen">
       <h2 className="text-3xl font-semibold text-blue-900 mb-6 flex items-center gap-2">
         <span
           className="text-cyan-600 hover:text-cyan-800 hover:underline cursor-pointer transition-colors duration-300"
@@ -56,15 +53,14 @@ export default function CalendarViewLayout() {
         </span>
       </h2>
 
-      {/* View Toggle Buttons */}
       <div className="flex gap-4 mb-6">
         {["monthly", "weekly"].map((type) => (
           <button
             key={type}
             className={`px-4 py-2 rounded-lg font-medium text-sm shadow-md transition duration-300 transform ${
               view === type
-                ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white scale-105"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                ? "bg-gradient-to-r from-blue-600 to-light-blue-500 text-white scale-105"
+                : "bg-wheat-50 text-gray-700 hover:bg-wheat-100"
             }`}
             onClick={() => setView(type)}
             disabled={view === type}
@@ -74,7 +70,6 @@ export default function CalendarViewLayout() {
         ))}
       </div>
 
-      {/* Appointment Detail or Prompt */}
       <div className="mb-6 min-h-[50px]">
         {selectedDate ? (
           <DayDetails
@@ -88,7 +83,6 @@ export default function CalendarViewLayout() {
         )}
       </div>
 
-      {/* Calendar Grid */}
       <div className="grid grid-cols-7 gap-2 border border-gray-200 rounded-xl p-4 shadow-md bg-white animate-fade-slide-up">
         {(view === "monthly" ? days : weekDays).map((day) => {
           const dateKey = getDateKey(day);
@@ -101,20 +95,20 @@ export default function CalendarViewLayout() {
               key={dateKey}
               onClick={() => handleDayClick(day)}
               className={`
-            text-sm text-center font-medium select-none rounded-lg cursor-pointer py-2
-            transition-all duration-200 ease-in-out
-            ${
-              hasIncident
-                ? "bg-emerald-100 text-emerald-800"
-                : "bg-gray-50 text-gray-700"
-            }
-            ${
-              isSelected
-                ? "ring-2 ring-cyan-500 bg-cyan-100 scale-105"
-                : "border border-gray-200"
-            }
-            hover:bg-blue-50 hover:shadow-sm
-          `}
+                text-sm text-center font-medium select-none rounded-lg cursor-pointer py-2
+                transition-all duration-200 ease-in-out
+                ${
+                  hasIncident
+                    ? "bg-emerald-100 text-emerald-800"
+                    : "bg-gray-50 text-gray-700"
+                }
+                ${
+                  isSelected
+                    ? "ring-2 ring-cyan-500 bg-cyan-100 scale-105"
+                    : "border border-gray-200"
+                }
+                hover:bg-blue-50 hover:shadow-sm
+              `}
               title={
                 hasIncident
                   ? `${incidentsByDate[dateKey].length} appointment(s)`

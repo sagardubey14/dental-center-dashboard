@@ -15,7 +15,7 @@ export default function NotificationPopup({ message, onClose }) {
 
   return (
     <div
-      className={`fixed top-4 left-1/2 -translate-x-1/2 transform transition-all duration-300 ease-in-out
+      className={`fixed top-4 left-1/2 -translate-x-1/2 z-100 transform transition-all duration-300 ease-in-out
         px-6 py-3 rounded shadow text-white flex items-center justify-between gap-4
         ${visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}
         ${message.type === "success" ? "bg-green-500" : "bg-red-500"}`}

@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
-import { mockData } from "../../data/seedUsers";
 import { useState } from "react";
+import { useApp } from "../../context/AppContext";
 
 export default function AdminDashboard() {
-  const upcomingAppointments = mockData.incidents
+  const { incidents, patients } = useApp();
+  const upcomingAppointments = incidents
     .sort((a, b) => new Date(a.appointmentDate) - new Date(b.appointmentDate))
     .slice(0, 10);
 
-  const patientIncidentCounts = mockData.incidents.reduce((acc, incident) => {
+  const patientIncidentCounts = incidents.reduce((acc, incident) => {
     acc[incident.patientId] = (acc[incident.patientId] || 0) + 1;
     return acc;
   }, {});
@@ -15,25 +16,25 @@ export default function AdminDashboard() {
   const topPatients = Object.entries(patientIncidentCounts)
     .sort((a, b) => b[1] - a[1])
     .map(([patientId, incidentCount]) => {
-      const patient = mockData.patients.find((p) => p.id === patientId);
+      const patient = patients.find((p) => p.id === patientId);
       return { ...patient, incidentCount };
     });
 
-  const pendingTreatments = mockData.incidents.filter(
+  const pendingTreatments = incidents.filter(
     (incident) => incident.status === "Pending"
   );
-  const completedTreatments = mockData.incidents.filter(
+  const completedTreatments = incidents.filter(
     (incident) => incident.status === "Completed"
   );
 
-  const totalRevenue = mockData.incidents.reduce(
+  const totalRevenue = incidents.reduce(
     (total, incident) => total + incident.cost,
     0
   );
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-teal-50 via-white to-sky-100 font-sans text-gray-800">
-      {/* Mobile Sidebar Overlay */}
+    <div className="flex min-h-screen bg-gradient-to-br from-teal-50 via-white to-sky-100 font-sans text-gray-800 p-2">
       <div
         className={`fixed inset-0 bg-black bg-opacity-40 z-30 md:hidden transition-opacity ${
           sidebarOpen
@@ -45,11 +46,11 @@ export default function AdminDashboard() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-40 w-64 h-full bg-white shadow-xl p-8 space-y-10 border-r border-teal-100 transform md:relative md:translate-x-0 transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 z-40 w-64 min-h-screen bg-teal-50 shadow-xl p-2 space-y-10 border-r border-teal-100 transform md:relative md:translate-x-0 transition-transform duration-300 ease-in-out ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <h2 className="text-3xl font-extrabold text-teal-700 tracking-tight mb-12 select-none">
+        <h2 className="text-3xl mt-2 ml-2 font-extrabold text-teal-700 tracking-tight mb-12 select-none">
           DentalCare Admin
         </h2>
         <nav className="space-y-6 text-base font-semibold">
@@ -86,7 +87,6 @@ export default function AdminDashboard() {
             className="text-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-md"
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >
-            {/* Hamburger icon */}
             <svg
               className="w-8 h-8"
               fill="none"
@@ -97,82 +97,75 @@ export default function AdminDashboard() {
               viewBox="0 0 24 24"
             >
               {sidebarOpen ? (
-                <path d="M6 18L18 6M6 6l12 12" /> // X icon
+                <path d="M6 18L18 6M6 6l12 12" />
               ) : (
-                <path d="M3 12h18M3 6h18M3 18h18" /> // Hamburger lines
+                <path d="M3 12h18M3 6h18M3 18h18" />
               )}
             </svg>
           </button>
-          <h1 className="text-xl font-extrabold text-teal-900">Dashboard</h1>
-          <div></div> {/* Placeholder for alignment */}
+          <h1 className="text-xl font-extrabold text-teal-900">
+            Dental Dashboard
+          </h1>
         </header>
 
-        {/* Content Scrollable Area */}
-        <main className="p-6 md:p-12 overflow-auto">
-          {/* Header for md+ */}
-          <div className="hidden md:flex justify-between items-center mb-12">
-            <div>
-              <h1 className="text-4xl font-extrabold text-teal-900 mb-1 leading-tight">
-                Dashboard
-              </h1>
-              <p className="text-teal-700 font-semibold text-lg">
-                Welcome back, Dr. Smith 👋
+        <main className="p-3 md:p-12 overflow-auto">
+          <div className="bg-teal-50 p-4 flex justify-between items-center rounded-lg shadow-lg mb-5 md:flex-row flex-col">
+            {/* Left Side: Title and Greeting */}
+            <div className="flex flex-col md:flex-row items-center gap-4">
+              <img
+                src="https://img.icons8.com/dotty/80/administrator-male.png"
+                alt="avatar"
+                className="w-14 h-14 rounded-full border-4 border-teal-500 shadow-xl transition-transform transform hover:scale-110"
+              />
+              <p className="text-teal-700 text-lg font-semibold">
+                Welcome back Admin
               </p>
             </div>
-            <div className="flex items-center gap-4">
-              <img
-                src="https://i.pravatar.cc/40?img=3"
-                alt="avatar"
-                className="w-12 h-12 rounded-full border-4 border-teal-500 shadow-md"
-              />
-              <span className="font-semibold text-teal-900 text-lg">
-                Dr. Smith
-              </span>
-            </div>
-          </div>
 
-          {/* Revenue and Add Patient side by side */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10">
-            <section className="col-span-1 bg-gradient-to-br from-green-50 to-teal-100 rounded-3xl shadow-lg p-8 hover:shadow-xl transition flex flex-col justify-center items-center text-center min-h-[180px]">
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-teal-800 mb-4 tracking-wide">
+            {/* Center: Total Revenue */}
+            <div className="text-center my-4 md:my-0">
+              <h2 className="text-xl font-bold text-teal-800 mb-1">
                 Total Revenue
               </h2>
-              <p className="text-4xl sm:text-6xl font-bold text-emerald-600 leading-none">
+              <p className="text-3xl font-semibold text-emerald-700">
                 ${totalRevenue.toLocaleString()}
               </p>
-            </section>
+            </div>
 
-            <div className="flex items-center justify-center bg-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition min-h-[180px]">
+            {/* Right Side: Add Patient Button */}
+            <div className="flex items-center gap-6 mt-4 md:mt-0">
               <Link
                 to="/admin/patients/add"
-                className="inline-block bg-teal-600 hover:bg-teal-700 text-white font-semibold px-10 sm:px-12 py-4 sm:py-5 rounded-full shadow-lg transition-transform transform hover:scale-105 text-lg sm:text-xl"
+                className="bg-teal-600 text-white font-semibold px-6 py-3 rounded-full shadow-lg text-lg hover:bg-teal-700 transition-transform transform hover:scale-105"
               >
                 ➕ Add New Patient
               </Link>
             </div>
           </div>
 
-          {/* Rest of the cards in two columns */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Upcoming Appointments */}
-            <section className="bg-white rounded-3xl shadow-lg p-6 sm:p-8 hover:shadow-xl transition ">
-              <h2 className="text-xl sm:text-2xl font-bold text-teal-700 mb-5 border-b border-teal-100 pb-2">
+            <section className="space-y-4">
+              <h2 className="text-2xl font-extrabold text-teal-700 mb-2">
                 Upcoming Appointments
               </h2>
-              <ul
-                className="space-y-2 text-gray-700 max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-teal-500"
-                style={{
-                  scrollbarWidth: "thin",
-                  scrollbarColor: "#14b8a6 transparent",
-                }}
-              >
+              <ul className="space-y-2 text-gray-700 max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-teal-500">
                 {upcomingAppointments.length ? (
                   upcomingAppointments.map((a) => (
-                    <li key={a.id} className="flex items-center gap-2">
-                      <span>📍</span>
+                    <li
+                      key={a.id}
+                      className="text-sm flex items-center gap-2"
+                    >
                       <span>{a.title}</span>
-                      <time className="ml-auto text-xs sm:text-sm text-gray-500 font-mono">
-                        {new Date(a.appointmentDate).toLocaleString()}
+                      <time className="ml-auto text-xs sm:text-sm text-teal-600 font-mono">
+                      {new Date(a.appointmentDate).toLocaleString(undefined, {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })}
                       </time>
                     </li>
                   ))
@@ -185,24 +178,18 @@ export default function AdminDashboard() {
             </section>
 
             {/* Top Patients */}
-            <section className="bg-white rounded-3xl shadow-lg p-6 sm:p-8 hover:shadow-xl transition ">
-              <h2 className="text-xl sm:text-2xl font-bold text-teal-700 mb-5 border-b border-teal-100 pb-2">
+            <section className="space-y-4">
+              <h2 className="text-2xl font-extrabold text-teal-700 mb-2">
                 Top Patients
               </h2>
-              <ul
-                className="space-y-2 text-gray-700 max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-teal-500"
-                style={{
-                  scrollbarWidth: "thin",
-                  scrollbarColor: "#14b8a6 transparent", // Tailwind teal-500 hex approx
-                }}
-              >
+              <ul className="space-y-2 text-gray-700 max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-teal-500">
                 {topPatients.length ? (
                   topPatients.map((p) => (
                     <li
                       key={p.id}
                       className="flex justify-between font-semibold"
                     >
-                      <span>🧑 {p.name}</span>
+                      <span>{p.name}</span>
                       <span className="text-xs sm:text-sm text-teal-600 font-normal">
                         {p.incidentCount} incidents
                       </span>
@@ -217,18 +204,27 @@ export default function AdminDashboard() {
             </section>
 
             {/* Pending Treatments */}
-            <section className="bg-white rounded-3xl shadow-lg p-6 sm:p-8 hover:shadow-xl transition max-h-[360px] overflow-y-auto scrollbar-thin scrollbar-thumb-yellow-300 pr-1">
-              <h2 className="text-xl sm:text-2xl font-bold text-yellow-600 mb-5 border-b border-yellow-200 pb-2">
+            <section className="space-y-4">
+              <h2 className="text-2xl font-extrabold text-yellow-600 mb-2">
                 Pending Treatments
               </h2>
               <ul className="space-y-2 text-gray-700">
                 {pendingTreatments.length ? (
                   pendingTreatments.map((t) => (
-                    <li key={t.id} className="flex items-center gap-2">
-                      <span>🕐</span>
+                    <li
+                      key={t.id}
+                      className="text-sm text-gray-700 flex items-center gap-2"
+                    >
                       <span>{t.title}</span>
-                      <time className="ml-auto text-xs sm:text-sm text-gray-500 font-mono">
-                        {new Date(t.appointmentDate).toLocaleString()}
+                      <time className="ml-auto text-xs sm:text-sm text-teal-600 font-mono">
+                      {new Date(t.appointmentDate).toLocaleString(undefined, {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })}
                       </time>
                     </li>
                   ))
@@ -241,18 +237,27 @@ export default function AdminDashboard() {
             </section>
 
             {/* Completed Treatments */}
-            <section className="bg-white rounded-3xl shadow-lg p-6 sm:p-8 hover:shadow-xl transition max-h-[360px] overflow-y-auto scrollbar-thin scrollbar-thumb-emerald-300 pr-1">
-              <h2 className="text-xl sm:text-2xl font-bold text-emerald-600 mb-5 border-b border-emerald-200 pb-2">
+            <section className="space-y-4">
+              <h2 className="text-2xl font-extrabold text-emerald-600 mb-2">
                 Completed Treatments
               </h2>
               <ul className="space-y-2 text-gray-700">
                 {completedTreatments.length ? (
                   completedTreatments.map((t) => (
-                    <li key={t.id} className="flex items-center gap-2">
-                      <span>✅</span>
+                    <li
+                      key={t.id}
+                      className="text-sm text-gray-700 flex items-center gap-2"
+                    >
                       <span>{t.title}</span>
-                      <time className="ml-auto text-xs sm:text-sm text-gray-500 font-mono">
-                        {new Date(t.appointmentDate).toLocaleString()}
+                      <time className="ml-auto text-xs sm:text-sm text-teal-600 font-mono">
+                      {new Date(t.appointmentDate).toLocaleString(undefined, {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })}
                       </time>
                     </li>
                   ))

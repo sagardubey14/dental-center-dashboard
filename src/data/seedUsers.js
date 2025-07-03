@@ -13,7 +13,6 @@ export const mockData = {
     { id: "11", role: "Patient", email: "charlie@entnt.in", password: "charlie123", patientId: "p8" },
     { id: "12", role: "Patient", email: "olivia@entnt.in", password: "olivia123", patientId: "p9" }
   ],
-  
 
   patients: [
     { id: "p1", name: "John Doe", dob: "1990-05-10", contact: "1234567890", healthInfo: "No allergies" },
@@ -45,9 +44,9 @@ export const mockData = {
     {
       id: "i2",
       patientId: "p2",
-      title: "Flu Symptoms",
-      description: "Cough, sore throat, fever",
-      comments: "Has been feeling weak for two days",
+      title: "Gum Infection",
+      description: "Painful swelling in the gums",
+      comments: "Bleeding during brushing",
       appointmentDate: "2025-07-02T11:30:00",
       cost: 50,
       status: "Completed",
@@ -58,105 +57,105 @@ export const mockData = {
     {
       id: "i3",
       patientId: "p3",
-      title: "Asthma Attack",
-      description: "Shortness of breath, wheezing",
-      comments: "Triggered by cold weather",
+      title: "Cavity Treatment",
+      description: "Decay in upper molar",
+      comments: "Requires filling",
       appointmentDate: "2025-07-05T14:00:00",
       cost: 100,
       status: "Pending",
       files: [
-        { name: "spirometry-report.pdf", url: "base64string-or-blob-url" }
+        { name: "cavity-report.pdf", url: "base64string-or-blob-url" }
       ]
     },
     {
       id: "i4",
       patientId: "p4",
-      title: "Diabetic Checkup",
-      description: "Routine checkup for diabetes management",
-      comments: "Blood sugar level control, needs consultation",
+      title: "Dental Checkup",
+      description: "Routine dental checkup",
+      comments: "Needs scaling and cleaning",
       appointmentDate: "2025-07-06T09:30:00",
       cost: 120,
       status: "Scheduled",
       files: [
-        { name: "blood-test-report.pdf", url: "base64string-or-blob-url" }
+        { name: "cleaning-report.pdf", url: "base64string-or-blob-url" }
       ]
     },
     {
       id: "i11",
       patientId: "p4",
-      title: "Diabetic Checkup",
-      description: "Routine checkup for diabetes management",
-      comments: "Blood sugar level control, needs consultation",
+      title: "Dental Checkup",
+      description: "Routine dental checkup",
+      comments: "Needs scaling and cleaning",
       appointmentDate: "2025-06-06T09:30:00",
       cost: 120,
       status: "Scheduled",
       files: [
-        { name: "blood-test-report.pdf", url: "base64string-or-blob-url" }
+        { name: "cleaning-report.pdf", url: "base64string-or-blob-url" }
       ]
     },
     {
       id: "i5",
       patientId: "p5",
-      title: "Annual Checkup",
-      description: "General health checkup, no issues",
-      comments: "Regular checkup, normal vitals",
+      title: "Teeth Whitening",
+      description: "Whitening treatment for yellow teeth",
+      comments: "Uses whitening toothpaste regularly",
       appointmentDate: "2025-07-07T10:15:00",
       cost: 70,
       status: "Completed",
       files: [
-        { name: "checkup-report.pdf", url: "base64string-or-blob-url" }
+        { name: "whitening-report.pdf", url: "base64string-or-blob-url" }
       ]
     },
     {
       id: "i6",
       patientId: "p6",
-      title: "Cholesterol Test",
-      description: "High cholesterol, needs consultation",
-      comments: "Has been taking medication regularly",
+      title: "Chronic Gum Issues",
+      description: "Recurring gum inflammation",
+      comments: "Uses medicated mouthwash regularly",
       appointmentDate: "2025-07-08T13:00:00",
       cost: 90,
       status: "Pending",
       files: [
-        { name: "cholesterol-report.pdf", url: "base64string-or-blob-url" }
+        { name: "gum-treatment-report.pdf", url: "base64string-or-blob-url" }
       ]
     },
     {
       id: "i7",
       patientId: "p7",
-      title: "Skin Rash",
-      description: "Red, itchy patches on arms",
-      comments: "Has been using over-the-counter cream",
+      title: "Tooth Sensitivity",
+      description: "Pain when consuming hot or cold foods",
+      comments: "Sensitive teeth, needs treatment",
       appointmentDate: "2025-07-09T11:45:00",
       cost: 65,
       status: "Scheduled",
       files: [
-        { name: "rash-report.pdf", url: "base64string-or-blob-url" }
+        { name: "sensitivity-report.pdf", url: "base64string-or-blob-url" }
       ]
     },
     {
       id: "i8",
       patientId: "p8",
-      title: "Mental Health Check",
-      description: "Anxiety and mild depression symptoms",
-      comments: "Needs counseling and treatment",
+      title: "Bruxism (Teeth Grinding)",
+      description: "Grinding teeth during sleep",
+      comments: "Complains of jaw pain in the mornings",
       appointmentDate: "2025-07-10T15:30:00",
       cost: 110,
       status: "Completed",
       files: [
-        { name: "mental-health-report.pdf", url: "base64string-or-blob-url" }
+        { name: "bruxism-report.pdf", url: "base64string-or-blob-url" }
       ]
     },
     {
       id: "i9",
       patientId: "p9",
-      title: "Headache Treatment",
-      description: "Frequent headaches, pressure around eyes",
-      comments: "Needs a CT scan for further diagnosis",
+      title: "Wisdom Teeth Removal",
+      description: "Pain in the back of the mouth, possible impaction",
+      comments: "Needs an X-ray for confirmation",
       appointmentDate: "2025-07-12T16:00:00",
       cost: 130,
       status: "Scheduled",
       files: [
-        { name: "ct-scan-report.pdf", url: "base64string-or-blob-url" }
+        { name: "xray-report.pdf", url: "base64string-or-blob-url" }
       ]
     },
     {
