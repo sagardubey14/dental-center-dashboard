@@ -132,7 +132,7 @@ src/
 - To run locally:
 
 ```bash
-git clone https://github.com/yourusername/dental-center-dashboard
+git clone https://github.com/sagardubey14/dental-center-dashboard
 cd dental-center-dashboard
 npm install
 npm run dev
